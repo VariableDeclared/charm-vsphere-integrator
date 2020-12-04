@@ -37,6 +37,18 @@ options:
       persistent volume claims. Defaults to 'datastore1'.
     type: string
     default: "datastore1"
+  region-tag:
+    description: |
+      Tag category to configre on the Cloud Provider. Enables the dynamic selection of PVCs based on Clusters.
+      NOTE: If 'credentials' is configured, you will need to place 'region-tag' into the credentials to set this value.
+    type: string
+    default: ""
+  zone-tag:
+    description: |
+      Tag category to configre on the Cloud Provider. Enables the dynamic selection of PVCs based on Clusters.
+      NOTE: If 'credentials' is configured, you will need to place 'zone-tag' into the credentials to set this value.
+    type: string
+    default: ""
   folder:
     description: |
       Virtual center VM folder path under the datacenter. Defaults to 'juju-kubernetes'.

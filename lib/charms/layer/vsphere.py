@@ -44,7 +44,6 @@ def save_credentials():
             status.blocked('invalid value for credentials config')
             return False
     no_creds_msg = 'missing credentials; set credentials config'
-
     # try individual config
     # NB: if a user sets one of these, they better set 'em all!
     if all([config['vsphere_ip'],
@@ -62,6 +61,8 @@ def save_credentials():
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE)
         creds_data = yaml.load(result.stdout.decode('utf8'))
+        creds_data['region-tag'] = config['region-tag']
+        creds_data['zone-tag'] = config['zone-tag']
         log('Using credentials-get for credentials')
         _save_creds(creds_data)
         return True
@@ -87,6 +88,8 @@ def get_vsphere_config():
         'datastore': config['datastore'],
         'folder': config['folder'],
         'respool_path': config['respool_path'],
+        'vsphere_region_tag': config['region-tag'],
+        'vsphere_zone_tag': config['zone-tag']
     }
     # datastore and folder can't be emtpy
     if not vsphere_config['datastore']:
@@ -120,7 +123,7 @@ def _save_creds(creds_data):
         vsphere_ip=vsphere_ip,
         user=attrs['user'],
         password=attrs['password'],
-        datacenter=datacenter,
+        datacenter=datacenter
     ))
 
 
